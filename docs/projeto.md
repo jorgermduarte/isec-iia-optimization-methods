@@ -25,9 +25,9 @@ forma a maximizar o número de arestas desse subconjunto
 # Implementações a realizar sobre o problema
 
 - 3 Métodos
-    - [ ] 1. Trepa colinas
-    - [ ] 2. Algoritmo evolutivo
-    - [ ] 3. Método hibrido ( combinação de 1. e 2.)
+    - [ ] 1. Trepa colinas (10%)
+    - [ ] 2. Algoritmo evolutivo (20%)
+    - [ ] 3. Método hibrido ( combinação de 1. e 2.) (10%)
 - Após a implementação dos 3 métodos, deve ser efetuado um estudo comparativo aprofundado sobre o desempenho da otimização.
     - deve ser analizado os seguintes fatores:
         - [ ] no algoritmo local:
