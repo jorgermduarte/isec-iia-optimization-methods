@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="isec-iia-optimization-methods" targetName="test_iia_chatgpd" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/isec-iia-optimization-methods.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithm.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithm.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/resumes/IIA_PraticaWikiNote.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/resumes/IIA_TeoricaWikiNote.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/resumo.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/subjects/01 Introducao.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/subjects/02 Agentes.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/subjects/03 Resolucaoo de Problemas.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/subjects/04 Pesquisa não Informada.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/subjects/05 Pesquisa Informada Heuristica.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/subjects/06 Melhoramento Iterativo.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2JEiVAae618yQE31kDsOq0sEcpw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/home/duarte/Desktop/workspace/github/jorgermduarte/isec-iia-optimization-methods",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="RunManager" selected="CMake Application.iia_test">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="iia_file1" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="10 ../resources/file1.txt" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="isec-iia-optimization-methods" TARGET_NAME="isec_iia_optimization_methods" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="isec-iia-optimization-methods" RUN_TARGET_NAME="isec_iia_optimization_methods">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="iia_test" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="10 ../resources/teste.txt" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="isec-iia-optimization-methods" TARGET_NAME="isec_iia_optimization_methods" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="isec-iia-optimization-methods" RUN_TARGET_NAME="isec_iia_optimization_methods">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test_iia_chatgpd" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="isec-iia-optimization-methods" TARGET_NAME="test_iia_chatgpd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="isec-iia-optimization-methods" RUN_TARGET_NAME="test_iia_chatgpd">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.iia_test" />
+      <item itemvalue="CMake Application.iia_file1" />
+      <item itemvalue="CMake Application.test_iia_chatgpd" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="" />
+      <created>1671581664063</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1671581664063</updated>
+      <workItem from="1671581665493" duration="2680000" />
+      <workItem from="1671649667626" duration="633000" />
+      <workItem from="1671654339180" duration="8223000" />
+      <workItem from="1671707614402" duration="1595000" />
+      <workItem from="1671753983956" duration="500000" />
+      <workItem from="1672004162028" duration="343000" />
+      <workItem from="1672084578416" duration="10000" />
+      <workItem from="1672095636218" duration="21000" />
+      <workItem from="1672096089757" duration="53000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
