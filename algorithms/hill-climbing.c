@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <stdbool.h>
 
 int executions = 0;
 int vertices, edges; // number of vertices and edges
@@ -11,7 +12,8 @@ int* solution; // array to store the current solution
 int* best_solution; // array to store the best solution found so far
 int best_solution_cost; // value of the best solution found so far
 
-int iterationsHillClimbing = 10000;
+int iterationsHillClimbing = 1000;
+bool displaySolutions = false;
 
 // display the best solution found so far
 void displayBestSolution(){
@@ -182,6 +184,31 @@ void generate_neighbor(int a[], int b[], int n)
     b[p2] = 0;
 }
 
+void generate_neighbor2(int a[], int b[], int n)
+{
+    int i, p1, p2, p3, p4;
+
+    for(i = 0; i < n; i++)
+        b[i] = a[i];
+    do
+        p1 = random_l_h(0, n-1);
+    while(b[p1] != 0);
+    do
+        p2 = random_l_h(0, n-1);
+    while(b[p2] != 1);
+    b[p1] = 1;
+    b[p2] = 0;
+    do
+        p3 = random_l_h(0, n-1);
+    while(b[p3] != 0 || p3 == p2);
+    do
+        p4 = random_l_h(0, n-1);
+    while(b[p4] != 1 || p4 == p1);
+    b[p3] = 1;
+    b[p4] = 0;
+}
+
+
 void replace(int a[], int b[], int n)
 {
     int i;
@@ -204,7 +231,7 @@ int hill_climbing(int sol[], int **mat, int vert, int num_iter)
     cost = calculate_fit(sol, mat, vert);
     for(i = 0; i < num_iter; i++)
     {
-        generate_neighbor(sol, nova_sol, vert);
+        generate_neighbor2(sol, nova_sol, vert);
 
         cost_neighbor = calculate_fit(nova_sol, mat, vert);
         if (cost_neighbor >= cost)
@@ -223,7 +250,9 @@ void code_execution(){
 
     int current_cost = hill_climbing(solution, adjacency_matrix, vertices, iterationsHillClimbing);
 
-    displayCurrentSolution();
+    if(displaySolutions){
+        displayCurrentSolution();
+    }
 
     if(k==0 || current_cost > best_solution_cost)
     {
