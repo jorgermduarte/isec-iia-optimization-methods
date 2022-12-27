@@ -3,7 +3,24 @@
 #include <string.h>
 #include <time.h>
 #include <stdbool.h>
+
 #include "../utils/utils.h"
+
+struct population{
+    int size;
+    float mutationProbability;
+    float recombinationProbability;
+    int tournamentSize;
+    int penalization;
+    int subgroupNumber;
+    int capacity;
+    int generationsNumber;
+};
+
+int evolutionary(int sol[], int **mat, int vert, int num_iter){
+    return 0;
+}
+
 
 int executions = 0;
 int vertices, edges; // number of vertices and edges
@@ -14,91 +31,14 @@ int* solution; // array to store the current solution
 int* best_solution; // array to store the best solution found so far
 int best_solution_cost; // value of the best solution found so far
 
-int iterationsHillClimbing = 1000;
-bool displaySolutions = true;
-
-void generate_neighbor(int a[], int b[], int n)
-{
-    int i, p1, p2;
-    for(i = 0; i < n; i++)
-        b[i] = a[i];
-    do
-        p1 = random_l_h(0, n-1);
-    while(b[p1] != 0);
-    do
-        p2 = random_l_h(0, n-1);
-    while(b[p2] != 1);
-    b[p1] = 1;
-    b[p2] = 0;
-}
-
-void generate_neighbor2(int a[], int b[], int n)
-{
-    int i, p1, p2, p3, p4;
-
-    for(i = 0; i < n; i++)
-        b[i] = a[i];
-    do
-        p1 = random_l_h(0, n-1);
-    while(b[p1] != 0);
-    do
-        p2 = random_l_h(0, n-1);
-    while(b[p2] != 1);
-    b[p1] = 1;
-    b[p2] = 0;
-    do
-        p3 = random_l_h(0, n-1);
-    while(b[p3] != 0 || p3 == p2);
-    do
-        p4 = random_l_h(0, n-1);
-    while(b[p4] != 1 || p4 == p1);
-    b[p3] = 1;
-    b[p4] = 0;
-}
-
-int hill_climbing(int sol[], int **mat, int vert, int num_iter)
-{
-    int *nova_sol, cost, cost_neighbor, i;
-
-    nova_sol = malloc(sizeof(int)*vert);
-
-    if (nova_sol == NULL)
-    {
-        printf("Error allocating memory for the new solution.\n");
-        exit(1);
-    }
-
-    cost = calculate_fit(sol, mat, vert);
-    for(i = 0; i < num_iter; i++)
-    {
-        generate_neighbor2(sol, nova_sol, vert);
-
-        cost_neighbor = calculate_fit(nova_sol, mat, vert);
-        if (cost_neighbor >= cost)
-        {
-            replace(sol, nova_sol, vert);
-            cost = cost_neighbor;
-        }
-    }
-    free(nova_sol);
-    return cost;
-}
+int iterationsEvolutionary = 100;
+bool displaySolutions = false;
 
 // function to calculate the number of edges in a given subset
 void code_execution(){
     generateInitialSolution(vertices, k, &solution);
 
-    int current_cost = hill_climbing(solution, adjacency_matrix, vertices, iterationsHillClimbing);
 
-    if(displaySolutions){
-        displayCurrentSolution(vertices, solution);
-    }
-
-    if(k==0 || current_cost > best_solution_cost)
-    {
-        best_solution_cost = current_cost;
-        replace(best_solution, solution, vertices);
-    }
 
     //printf("   > Best solution: %d\n" , best_solution_cost);
     //printf("   > Current solution: %d\n" , current_cost);
