@@ -45,8 +45,8 @@ struct populationSettings parameters = {
         0.3,
         2,
         0,
-        0,
-        0,
+        0, // this value is K and will be set later on the file reading
+        0, // this value will be set later based on the number of vertices on the file reading
         2500
 };
 
@@ -115,7 +115,7 @@ void code_execution(){
     printf("Initial population generated.\n");
     displaySolution(currentPopulation[0]);
 
-    //evaluate population ( fitness)
+    //evaluate population (fitness)
 
     while(current_generation <= parameters.generationsNumber){
         //binary tournament
