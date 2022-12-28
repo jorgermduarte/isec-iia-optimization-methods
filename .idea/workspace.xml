@@ -19,12 +19,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="feat: code cleanup">
       <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2022-12-28T20-50-38-0146.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/evolutionary" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hill_climbing" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/algorithms/evolutionary.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/evolutionary.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +127,7 @@
       <workItem from="1672095636218" duration="21000" />
       <workItem from="1672096089757" duration="783000" />
       <workItem from="1672168419323" duration="8685000" />
-      <workItem from="1672260637154" duration="3856000" />
+      <workItem from="1672260637154" duration="4159000" />
     </task>
     <task id="LOCAL-00001" summary="feat: implemented the hill_climb algorithm">
       <created>1672096267983</created>
@@ -154,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672173054279</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat: added base structs for the evolutionary algorithm">
+      <created>1672264553550</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1672264553550</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,6 +168,7 @@
     <MESSAGE value="feat: implemented the hill_climb algorithm" />
     <MESSAGE value="feat: added another hill_climbing search with other neighborhood" />
     <MESSAGE value="feat: code cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: code cleanup" />
+    <MESSAGE value="feat: added base structs for the evolutionary algorithm" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added base structs for the evolutionary algorithm" />
   </component>
 </project>
