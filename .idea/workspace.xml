@@ -17,14 +17,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/algorithms/evolutionary.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/utils.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/utils.h" afterDir="false" />
+    <list default="true" id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="feat: code cleanup">
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2022-12-28T20-50-38-0146.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/evolutionary" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hill_climbing" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/hill-climbing.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/hill-climbing.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithms/evolutionary.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/evolutionary.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,9 +63,9 @@
   }
 }</component>
   <component name="RunManager" selected="CMake Application.file5.txt execution">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="file1.txt execution" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../resources/file1.txt 300" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="isec-iia-optimization-methods" TARGET_NAME="isec-iia-optimization-methods" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="isec-iia-optimization-methods" RUN_TARGET_NAME="isec-iia-optimization-methods">
@@ -130,7 +130,8 @@
       <workItem from="1672084578416" duration="10000" />
       <workItem from="1672095636218" duration="21000" />
       <workItem from="1672096089757" duration="783000" />
-      <workItem from="1672168419323" duration="4366000" />
+      <workItem from="1672168419323" duration="8685000" />
+      <workItem from="1672260637154" duration="3856000" />
     </task>
     <task id="LOCAL-00001" summary="feat: implemented the hill_climb algorithm">
       <created>1672096267983</created>
@@ -146,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672169333930</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat: code cleanup">
+      <created>1672173054279</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1672173054279</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,17 +164,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="feat: implemented the hill_climb algorithm" />
     <MESSAGE value="feat: added another hill_climbing search with other neighborhood" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added another hill_climbing search with other neighborhood" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/utils/utils.c</url>
-          <line>19</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="feat: code cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: code cleanup" />
   </component>
 </project>

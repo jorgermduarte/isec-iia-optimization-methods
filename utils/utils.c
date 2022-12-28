@@ -165,7 +165,6 @@ int calculate_fit(int a[], int **mat, int vert)
     return total / 2;
 }
 
-
 void replace(int a[], int b[], int n)
 {
     int i;
