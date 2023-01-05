@@ -2,188 +2,345 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <stdbool.h>
-
 #include "../utils/utils.h"
 
-struct populationSettings{
-    int size;
+typedef struct Individual {
+    int *solution;
+    int fitness;
+    int isValid;
+}Individual;
+
+typedef struct SimulationState {
+    // Sizes
+    int populationSize;
+    int genes;              // Number of vertices + 1
+    int k;                  // Subgroup size
+    int tournamentSize;
+    int generationsToSim;
+    int currentGeneration;
+    int executions;
+
+    // Probabilities
     float mutationProbability;
     float recombinationProbability;
-    int tournamentSize;
-    int penalization;
-    int subgroupNumber;
-    int capacity;
-    int generationsNumber;
-};
-
-struct iterationSolution{
-    int* solution;
-    int fitness;
-    int valid;
-};
-
-typedef struct iterationSolution* population; // population is an array of iterationSolution
-
-int executions = 0;
-int vertices, edges; // number of vertices and edges
-int k; // size of the subset
-int** adjacency_matrix; // adjacency matrix to store the graph
-int* solution; // array to store the current solution
-
-struct iterationSolution current_best_round, best_final_round;
-int invalid_solutions = 0; // total number of invalid solutions;
-int current_generation = 0;
+    Individual BestSolution;
+}SimulationState;
 
 
+//Generates a float random number 0-1
+float rand_01() {
+    return (float) rand() / (float) RAND_MAX;
+}
 
-int iterationsEvolutionary = 100;
+//Compares two individuals based on their validity and fitness
+int compare_individual(const void *lhs, const void *rhs) {
+    const Individual *p1 = lhs;
+    const Individual *p2 = rhs;
 
-struct populationSettings parameters = {
-        100,
-        0.0,
-        0.3,
-        2,
-        0,
-        0, // this value is K and will be set later on the file reading
-        0, // this value will be set later based on the number of vertices on the file reading
-        2500
-};
+    if (p1->isValid == 0)
+        return -1;
 
-int verifyAux(int *array_k_size, int k,int elements){
-    for(int i= 0; i < k; i++){
-        if(array_k_size[i] != elements){
-            return 0;
-        }
-    }
+    if (p1->fitness < p2->fitness)
+        return -1;
+
     return 1;
 }
 
-void displaySolution(struct iterationSolution solution){
-    printf("Solution: ");
+//Generates the initial population given the simulation parameters
+Individual *generateInitialPopulation(SimulationState *simulationState) {
 
-    for(int i = 0; i < vertices; i++){
-        printf("%d ", solution.solution[i]);
-    }
-
-    printf("Fitness: %d\n", solution.fitness);
-    printf("Valid: %d\n", solution.valid);
-}
-
-struct iterationSolution* generateInitialPopulation(struct populationSettings *settings){
-    struct iterationSolution* current;
-    int elements = settings->capacity / settings->subgroupNumber;
-    int sub_conj = settings->subgroupNumber - 1;
-
-    int aux[settings->subgroupNumber];
-    int n_random;
-
-    for(int i = 0; i < settings->subgroupNumber; i++){
-        aux[i] = 0;
-    }
+    Individual *current;
 
     //allocate memory for the population array
-    current = (struct iterationSolution*) malloc(settings->size * sizeof(struct iterationSolution));
-    if(current == NULL){
+    current = (Individual *) malloc(simulationState->populationSize * sizeof(Individual));
+    if (current == NULL) {
         printf("Error allocating memory for the new individual.\n");
         exit(1);
     }
 
-    int j,x;
-    for(x = 0; x < settings->size; x++){
-        for(j = 0; j < settings->capacity; j++){
-            // TODO: generate the initial solution for each individual in the population
-        }
-
-
-        for(int i = 0; i < settings->subgroupNumber; i++){
-            aux[i] = 0;
-        }
-
+    for (int i = 0; i < simulationState->populationSize; i++) {
+        generateInitialSolution(simulationState->genes, simulationState->k, &current[i].solution);
     }
     return current;
 }
 
-// function to calculate the number of edges in a given subset
-void code_execution(){
+//Prints the solution and its associated data
+void displaySolution(Individual *individual, SimulationState *simulationState) {
+    printf("Solution: ");
 
-    current_generation++; // starts at 0
-    printf("Generation: %d\n", current_generation);
-
-    //generate initial population ( population is an array of iterationSolution )
-    population currentPopulation = generateInitialPopulation(&parameters); // generate initial population ( list of iterationSolutions )
-    printf("Initial population generated.\n");
-    displaySolution(currentPopulation[0]);
-
-    //evaluate population (fitness)
-
-    while(current_generation <= parameters.generationsNumber){
-        //binary tournament
-
-        //apply genetic operators
-
-        //crossover
-
-        //mutation
-
-        //evaluate the new population
-
-        //update the best solution found so far
-
-        //increment the generation counter
-        current_generation++;
+    for (int i = 0; i < simulationState->genes; i++) {
+        printf("%d ", individual->solution[i]);
     }
 
-    // count the invalid solutions found
-
-    // print the best solution found so far
-
-    // print the median of the invalid solutions found
-
+    printf("\nFitness: %d\n", individual->fitness);
+    printf("Valid: %d\n", individual->isValid);
 }
 
+//Compares the number of edges with target k value
+int evaluate_individual(const int *solution, int num_vertices, int k) {
+    int count = 0;
+    for (int i = 0; i < num_vertices; i++) {
+        if (solution[i] == 1) {
+            count++;
+        }
+    }
+    if (count == k)
+        return 1;
+    return 0;
+}
+
+//Evaluates a given population and sorts them in ascending order of fitness
+void evaluate_population(Individual *population, SimulationState *simulationState, int **adjacency_matrix) {
+    for (int i = 0; i < simulationState->populationSize; i++) {
+        population[i].isValid = evaluate_individual(population[i].solution, simulationState->genes, simulationState->k);
+        if (population[i].isValid)
+            population[i].fitness = calculate_fit(population[i].solution, adjacency_matrix, simulationState->genes);
+        else
+            population[i].fitness = -1;
+    }
+    qsort(population, simulationState->populationSize, sizeof(Individual), compare_individual);
+}
+
+//Selects the fittest population from the given population for being parents for the next generation
+void tournament_selection(Individual *population, SimulationState *simulationState, Individual *parents) {
+    int i, x1, x2;
+
+    for (i = 0; i < simulationState->populationSize; i++) {
+        x1 = random_l_h(0, simulationState->populationSize - 1);
+        do
+            x2 = random_l_h((simulationState->populationSize - 1) / 2, simulationState->populationSize - 1);
+        while (x1 == x2);
+        if (population[x1].fitness > population[x2].fitness)
+            replace(parents[i].solution, population[x1].solution, simulationState->genes);
+        else
+            replace(parents[i].solution, population[x2].solution, simulationState->genes);
+    }
+}
+
+void reparacao(int *solution, SimulationState *simulationState) {
+    int count = 0;
+
+    for (int i = 0; i < simulationState->genes; i++) {
+        if (solution[i])
+            count++;
+    }
+
+    while (count < simulationState->k) {
+        int p = random_l_h(0, simulationState->genes - 1);
+        if (solution[p] == 0) {
+            solution[p] = 1;
+            count++;
+        }
+    }
+
+    while (count > simulationState->k) {
+        int p = random_l_h(0, simulationState->genes - 1);
+        if (solution[p] == 1) {
+            solution[p] = 0;
+            count--;
+        }
+    }
+}
+
+//Generates new population from parent population
+void crossover(Individual *population, SimulationState *simulationState, Individual *parents) {
+    int i, j, point;
+    int max = simulationState->populationSize;
+    if (max % 2 != 0)
+        max--;
+
+    for (i = 0; i < max; i += 2) {
+        if (rand_01() < simulationState->recombinationProbability) {
+            point = random_l_h(0, simulationState->genes - 1);
+            for (j = 0; j < point; j++) {
+                population[i].solution[j] = parents[i].solution[j];
+                population[i + 1].solution[j] = parents[i + 1].solution[j];
+            }
+            for (j = point; j < simulationState->genes; j++) {
+                population[i].solution[j] = parents[i + 1].solution[j];
+                population[i + 1].solution[j] = parents[i].solution[j];
+            }
+            reparacao(population[i].solution, simulationState);
+            reparacao(population[i + 1].solution, simulationState);
+        } else {
+            replace(population[i].solution, parents[i].solution, simulationState->genes);
+            replace(population[i + 1].solution, parents[i + 1].solution, simulationState->genes);
+        }
+    }
+}
+
+//Generates new population from parent population - each bit is randomly chosen from both parents
+void recombinacao_uniforme(Individual *population, SimulationState *simulationState, Individual *parents) {
+    int i, j;
+    int max = simulationState->populationSize;
+    if (max % 2 != 0)
+        max--;
+
+    for (i = 0; i < max; i += 2) {
+        if (rand_01() < simulationState->recombinationProbability) {
+            for (j = 0; j < simulationState->genes; j++) {
+                if (rand_01() > 0.5) {
+                    population[i].solution[j] = parents[i].solution[j];
+                    population[i + 1].solution[j] = parents[i + 1].solution[j];
+                } else {
+                    population[i].solution[j] = parents[i + 1].solution[j];
+                    population[i + 1].solution[j] = parents[i].solution[j];
+                }
+            }
+            reparacao(population[i].solution, simulationState);
+            reparacao(population[i + 1].solution, simulationState);
+        } else {
+            replace(population[i].solution, parents[i].solution, simulationState->genes);
+            replace(population[i + 1].solution, parents[i + 1].solution, simulationState->genes);
+        }
+    }
+}
+
+//Generates new population from parent population - Recombines using 2 points
+void recombinacao_dois_pontos_corte(Individual *population, SimulationState *simulationState, Individual *parents) {
+    int i, j, point1, point2;
+    int max = simulationState->populationSize;
+    if (max % 2 != 0)
+        max--;
+
+    for (i = 0; i < max; i += 2) {
+        if (rand_01() < simulationState->recombinationProbability) {
+            point1 = random_l_h(0, simulationState->genes - 2);
+            point2 = random_l_h(point1 + 1, simulationState->genes - 1);
+            for (j = 0; j < point1; j++) {
+                population[i].solution[j] = parents[i].solution[j];
+                population[i + 1].solution[j] = parents[i + 1].solution[j];
+            }
+            for (j = point1; j < point2; j++) {
+                population[i].solution[j] = parents[i + 1].solution[j];
+                population[i + 1].solution[j] = parents[i].solution[j];
+            }
+            for (j = point2; j < simulationState->genes; j++) {
+                population[i].solution[j] = parents[i].solution[j];
+                population[i + 1].solution[j] = parents[i + 1].solution[j];
+            }
+
+            reparacao(population[i].solution, simulationState);
+            reparacao(population[i + 1].solution, simulationState);
+        } else {
+            replace(population[i].solution, parents[i].solution, simulationState->genes);
+            replace(population[i + 1].solution, parents[i + 1].solution, simulationState->genes);
+        }
+    }
+}
+
+//Flips the bits based on probability and maintains k validity
+void mutation(int *solution, SimulationState *simulationState) {
+    for (int i = 0; i < simulationState->genes; i++) {
+        float prob = rand_01();
+        if (prob < simulationState->mutationProbability)
+            solution[i] = !solution[i];
+    }
+
+    reparacao(solution, simulationState);
+}
+
+//mutation by exchange
+void mutacao_por_troca(int *solution, SimulationState *simulationState) {
+    int pos1, pos2, aux;
+
+    if (rand_01() < simulationState->mutationProbability) {
+        do
+            pos1 = random_l_h(0, simulationState->genes - 1);
+        while (solution[pos1] == 1);
+        do
+            pos2 = random_l_h(0, simulationState->genes - 1);
+        while (solution[pos2] == 0);
+        aux = solution[pos1];
+        solution[pos1] = solution[pos2];
+        solution[pos2] = aux;
+    }
+}
+
+//Runs the main algorithm
+void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
+    // Data
+    Individual *population = generateInitialPopulation(simulationState);
+    Individual *parents = (Individual *) malloc(simulationState->populationSize * sizeof(Individual));
+    for (int i = 0; i < simulationState->populationSize; i++)
+        parents[i].solution = malloc(sizeof(int) * simulationState->genes);
+    simulationState->currentGeneration = 0;
+    simulationState->BestSolution.fitness = -1;
+    do {
+        evaluate_population(population, simulationState, adjacency_matrix);
+        if (population[simulationState->populationSize - 1].isValid &&
+            population[simulationState->populationSize - 1].fitness > simulationState->BestSolution.fitness) {
+            replace(simulationState->BestSolution.solution, population[simulationState->populationSize - 1].solution,
+                    simulationState->genes);
+            simulationState->BestSolution.fitness = population[simulationState->populationSize - 1].fitness;
+            simulationState->BestSolution.isValid = population[simulationState->populationSize - 1].isValid;
+        }
+        tournament_selection(population, simulationState, parents);
+        recombinacao_uniforme(population, simulationState, parents);
+        for (int i = 0; i < simulationState->populationSize; i++)
+            mutacao_por_troca(population[i].solution, simulationState);
+        simulationState->currentGeneration++;
+    } while (simulationState->currentGeneration <= simulationState->generationsToSim);
+    //printf("\nGeneration: %d\n", simulationState->currentGeneration);
+    displaySolution(&simulationState->BestSolution, simulationState);
+
+    for (int i = 0; i < simulationState->populationSize; i++) {
+        free(parents[i].solution);
+        free(population[i].solution);
+    }
+    free(parents);
+    free(population);
+    fflush(stdout);
+}
+
+
 int main(int argc, char *argv[]) {
-    if(argc != 3){
+    // Data
+    int **adjacency_matrix;
+    SimulationState simulationState = {
+            100, 0, 0, 2, 50, 0, 0, 0.5f, 0.9f, {0, 0, 0}
+    };
+    int edges;
+    int vertices;
+
+    if (argc != 3) {
         printf("Please provide two arguments, example: ./hill-climbing <input_file> <execution_times> \n");
         exit(1);
     }
 
-    // random seed for the random number generator
-    srand((unsigned)time(NULL));
+    // Seeding rand
+    srand((unsigned) time(NULL));
 
     char *filename = argv[1];
-    executions = atoi(argv[2]);
+    char *ptr_str_tol;
+    simulationState.executions = (int) strtol(argv[2], &ptr_str_tol, 10);
 
-    printf(" > Reading input file: %s\n" , filename);
-    printf(" > Number of executions: %d\n", executions);
+    printf(" > Reading input file: %s\n", filename);
+    printf(" > Number of executions: %d\n", simulationState.executions);
 
-    init(filename, &k, &vertices, &edges, &adjacency_matrix);
-    //displayAdjacencyMatrix(vertices, adjacency_matrix);
+    init(filename, &simulationState.k, &vertices, &edges, &adjacency_matrix);
+    displayAdjacencyMatrix(vertices, adjacency_matrix);
 
-    parameters.capacity = vertices;
-    parameters.subgroupNumber = k;
+    simulationState.genes = vertices;
+    simulationState.BestSolution.solution = (int *) malloc(sizeof(int) * vertices);
 
-    printf(" > Capacity: %d\n", parameters.capacity);
-    printf(" > SubgroupNumber: %d\n", parameters.subgroupNumber);
+    printf(" > NumOfGenes: %d\n", simulationState.genes);
+    printf(" > SubgroupNumber: %d\n", simulationState.k);
 
-    for(int i = 0; i < executions; i++){
-        code_execution();
+    for (int i = 0; i < simulationState.executions; i++) {
+        printf("\nExecution : %d\n", i + 1);
+        code_execution(&simulationState, adjacency_matrix);
     }
-
     printf(" =============================== \n");
-   // printf("> Best solution with the best cost: %d\n", best_solution_cost);
-    //printf("> Best solution: ");
-    //for(int i = 0; i < vertices; i++){
-    //    printf("%d ", best_solution[i]);
-    //}
-    //printf("\n");
 
     // clean up
-    for(int i = 0; i < vertices; i++){
+    for (int i = 0; i <= vertices; i++) {
         free(adjacency_matrix[i]);
     }
 
     free(adjacency_matrix);
+    free(simulationState.BestSolution.solution);
 
     return 0;
+
 }
