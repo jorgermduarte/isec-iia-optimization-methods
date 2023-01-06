@@ -15,10 +15,10 @@ typedef struct SimulationState {
     int populationSize;
     int genes;              // Number of vertices + 1
     int k;                  // Subgroup size
-    int tournamentSize;
-    int generationsToSim;
-    int currentGeneration;
-    int executions;
+    int tournamentSize;     // Tournament size ?? [NOT USED]
+    int generationsToSim;   // Number of generations to simulate ( not defined ? )
+    int currentGeneration;  // dont change
+    int executions;         // we receive this from the command line [dont change]
 
     // Probabilities
     float mutationProbability;
@@ -26,6 +26,7 @@ typedef struct SimulationState {
     Individual BestSolution;
 }SimulationState;
 
+float executionsMedianFitness = 0;
 
 //Generates a float random number 0-1
 float rand_01() {
@@ -242,53 +243,80 @@ void mutation(int *solution, SimulationState *simulationState) {
 
 //mutation by exchange
 void mutacao_por_troca(int *solution, SimulationState *simulationState) {
-    int pos1, pos2, aux;
+    int pos1, pos2;
 
     if (rand_01() < simulationState->mutationProbability) {
-        do
-            pos1 = random_l_h(0, simulationState->genes - 1);
-        while (solution[pos1] == 1);
-        do
-            pos2 = random_l_h(0, simulationState->genes - 1);
-        while (solution[pos2] == 0);
-        aux = solution[pos1];
+        pos1 = random_l_h(0, simulationState->genes - 1); // grabs a random position in the solution
+        pos2 = random_l_h(0, simulationState->genes - 1); // grabs a random position in the solution
+
+        int currentVal = solution[pos1];
         solution[pos1] = solution[pos2];
-        solution[pos2] = aux;
+        solution[pos2] = currentVal;
     }
 }
 
 //Runs the main algorithm
 void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
-    // Data
+    // Initial Population
+    // this initial population does not include the reparation functions and flips
+    // this is because all solutions are valid
     Individual *population = generateInitialPopulation(simulationState);
-    Individual *parents = (Individual *) malloc(simulationState->populationSize * sizeof(Individual));
-    for (int i = 0; i < simulationState->populationSize; i++)
-        parents[i].solution = malloc(sizeof(int) * simulationState->genes);
+
+    // Evaluate entire Population (fitness)
+    evaluate_population(population, simulationState, adjacency_matrix);
+
+    // define the best solution found so far ( population initialized)
+    Individual best = population[0];
+    for(int i = 1; i < simulationState->populationSize; i++)
+        if (population[i].fitness >= best.fitness)
+            best = population[i];
+
     simulationState->currentGeneration = 0;
-    simulationState->BestSolution.fitness = -1;
+    simulationState->BestSolution.fitness = 0;
+
     do {
-        evaluate_population(population, simulationState, adjacency_matrix);
-        if (population[simulationState->populationSize - 1].isValid &&
-            population[simulationState->populationSize - 1].fitness > simulationState->BestSolution.fitness) {
-            replace(simulationState->BestSolution.solution, population[simulationState->populationSize - 1].solution,
-                    simulationState->genes);
-            simulationState->BestSolution.fitness = population[simulationState->populationSize - 1].fitness;
-            simulationState->BestSolution.isValid = population[simulationState->populationSize - 1].isValid;
+        // Malloc for parents
+        Individual *parents = (Individual *) malloc(simulationState->populationSize * sizeof(Individual));
+        for (int i = 0; i < simulationState->populationSize; i++){
+            parents[i].solution = malloc(sizeof(int) * simulationState->genes);
+            parents[i].fitness = 0;
+            parents[i].isValid = 0;
         }
+
+        // Binary Tournament Selection
         tournament_selection(population, simulationState, parents);
+
+        // Recombination
         recombinacao_uniforme(population, simulationState, parents);
+
+        // Mutation
         for (int i = 0; i < simulationState->populationSize; i++)
             mutacao_por_troca(population[i].solution, simulationState);
-        simulationState->currentGeneration++;
-    } while (simulationState->currentGeneration <= simulationState->generationsToSim);
-    //printf("\nGeneration: %d\n", simulationState->currentGeneration);
-    displaySolution(&simulationState->BestSolution, simulationState);
 
-    for (int i = 0; i < simulationState->populationSize; i++) {
-        free(parents[i].solution);
-        free(population[i].solution);
-    }
-    free(parents);
+        // Evaluate entire Population (fitness)
+        evaluate_population(population, simulationState, adjacency_matrix);
+
+        // Update best solution
+        for(int i = 0; i < simulationState->populationSize; i++)
+            if (population[i].fitness >= best.fitness)
+                best = population[i];
+
+        // Free parents
+        for (int i = 0; i < simulationState->populationSize; i++)
+            free(parents[i].solution);
+
+        free(parents);
+
+        // Define the best solution found so far after the current generation
+        if (best.fitness >= simulationState->BestSolution.fitness) {
+            simulationState->BestSolution = best;
+        }
+
+        // Update current generation
+        simulationState->currentGeneration++;
+
+    } while (simulationState->currentGeneration <= simulationState->generationsToSim);
+
     free(population);
     fflush(stdout);
 }
@@ -298,8 +326,18 @@ int main(int argc, char *argv[]) {
     // Data
     int **adjacency_matrix;
     SimulationState simulationState = {
-            100, 0, 0, 2, 50, 0, 0, 0.5f, 0.9f, {0, 0, 0}
+            .populationSize = 100, // you can change this value
+            .genes = 0,
+            .k = 0,
+            .tournamentSize = 2, // you can change this value
+            .generationsToSim = 1000, // you can change this value
+            .currentGeneration = 0,
+            .executions = 0,
+            .mutationProbability = 0.5f, // you can change this value
+            .recombinationProbability = 0.9f, // you can change this value
+            .BestSolution = {.fitness = 0, .isValid = 0, .solution = NULL}
     };
+
     int edges;
     int vertices;
 
@@ -319,7 +357,7 @@ int main(int argc, char *argv[]) {
     printf(" > Number of executions: %d\n", simulationState.executions);
 
     init(filename, &simulationState.k, &vertices, &edges, &adjacency_matrix);
-    displayAdjacencyMatrix(vertices, adjacency_matrix);
+    //displayAdjacencyMatrix(vertices, adjacency_matrix);
 
     simulationState.genes = vertices;
     simulationState.BestSolution.solution = (int *) malloc(sizeof(int) * vertices);
@@ -328,10 +366,26 @@ int main(int argc, char *argv[]) {
     printf(" > SubgroupNumber: %d\n", simulationState.k);
 
     for (int i = 0; i < simulationState.executions; i++) {
-        printf("\nExecution : %d\n", i + 1);
+        printf("=============================== \n");
+        printf("Execution : %d\n", i + 1);
         code_execution(&simulationState, adjacency_matrix);
+        displaySolution(&simulationState.BestSolution, &simulationState);
+
+        // add to calculate the average later
+        executionsMedianFitness += simulationState.BestSolution.fitness;
+
+        // Reset the best solution
+        simulationState.BestSolution.fitness = 0;
+        simulationState.BestSolution.isValid = 0;
+        for (int j = 0; j < simulationState.genes; j++)
+            simulationState.BestSolution.solution[j] = 0;
+
+
+
     }
     printf(" =============================== \n");
+
+    printf(" > Average Fitness: %f\n", executionsMedianFitness / simulationState.executions);
 
     // clean up
     for (int i = 0; i <= vertices; i++) {

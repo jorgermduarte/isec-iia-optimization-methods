@@ -17,7 +17,7 @@ int best_solution_cost; // value of the best solution found so far
 int iterationsHillClimbing = 1000;
 bool displaySolutions = true;
 
-int mbf = 0;
+float mbf = 0;
 
 void generate_neighbor(int a[], int b[], int n)
 {
@@ -94,6 +94,7 @@ void code_execution(){
 
     if(displaySolutions){
         displayCurrentSolution(vertices, solution);
+        printf("         > Cost: %d\n", current_cost);
     }
 
     if(k==0 || current_cost > best_solution_cost)
@@ -102,6 +103,7 @@ void code_execution(){
         replace(best_solution, solution, vertices);
 
     }
+
     //printf("   > Best solution: %d\n" , best_solution_cost);
     //printf("   > Current solution: %d\n" , current_cost);
     //free(solution);
@@ -129,19 +131,20 @@ int main(int argc, char *argv[]) {
 
     for(int i = 0; i < executions; i++){
         code_execution();
-
         mbf += best_solution_cost;
     }
 
-    printf(" =============================== \n");
-    printf("> Best solution with the best cost: %d\n", best_solution_cost);
-    printf("> Best solution: ");
+    printf("############################################################################################# \n");
+
+    printf("> Final best solution: ");
     for(int i = 0; i < vertices; i++){
         printf("%d ", best_solution[i]);
     }
     printf("\n");
-    printf("> MBF: %d\n", mbf/executions);
 
+    printf("> Best solution cost: %d\n", best_solution_cost);
+
+    printf("> Average cost: %f\n", mbf/executions);
 
     // clean up
     for(int i = 0; i < vertices; i++){

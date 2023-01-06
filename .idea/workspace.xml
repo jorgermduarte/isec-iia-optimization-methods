@@ -20,6 +20,7 @@
     <list default="true" id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="feat: code cleanup">
       <change afterPath="$PROJECT_DIR$/algorithms/hibrid.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithms/evolutionary.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/evolutionary.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/algorithms/hill-climbing.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/hill-climbing.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evolutionary" beforeDir="false" afterPath="$PROJECT_DIR$/evolutionary" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hill_climbing" beforeDir="false" afterPath="$PROJECT_DIR$/hill_climbing" afterDir="false" />
@@ -130,7 +131,7 @@
       <workItem from="1672096089757" duration="783000" />
       <workItem from="1672168419323" duration="8685000" />
       <workItem from="1672260637154" duration="4159000" />
-      <workItem from="1673030794083" duration="351000" />
+      <workItem from="1673030794083" duration="4745000" />
     </task>
     <task id="LOCAL-00001" summary="feat: implemented the hill_climb algorithm">
       <created>1672096267983</created>
@@ -160,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672264553550</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: added mbf in hill_climbing.">
+      <created>1673031179954</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1673031179954</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,6 +180,7 @@
     <MESSAGE value="feat: added another hill_climbing search with other neighborhood" />
     <MESSAGE value="feat: code cleanup" />
     <MESSAGE value="feat: added base structs for the evolutionary algorithm" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added base structs for the evolutionary algorithm" />
+    <MESSAGE value="feat: added mbf in hill_climbing." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added mbf in hill_climbing." />
   </component>
 </project>
