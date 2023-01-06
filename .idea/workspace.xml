@@ -18,9 +18,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="feat: code cleanup">
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2022-12-28T20-50-38-0146.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithms/hibrid.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/evolutionary.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/evolutionary.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithms/hill-climbing.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/hill-climbing.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evolutionary" beforeDir="false" afterPath="$PROJECT_DIR$/evolutionary" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hill_climbing" beforeDir="false" afterPath="$PROJECT_DIR$/hill_climbing" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,9 +61,9 @@
   }
 }</component>
   <component name="RunManager" selected="CMake Application.file5.txt execution">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="file1.txt execution" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../resources/file1.txt 300" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="isec-iia-optimization-methods" TARGET_NAME="isec-iia-optimization-methods" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="isec-iia-optimization-methods" RUN_TARGET_NAME="isec-iia-optimization-methods">
@@ -128,6 +130,7 @@
       <workItem from="1672096089757" duration="783000" />
       <workItem from="1672168419323" duration="8685000" />
       <workItem from="1672260637154" duration="4159000" />
+      <workItem from="1673030794083" duration="351000" />
     </task>
     <task id="LOCAL-00001" summary="feat: implemented the hill_climb algorithm">
       <created>1672096267983</created>
