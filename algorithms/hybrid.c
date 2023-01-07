@@ -377,7 +377,7 @@ void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
 
         // Update best solution
         for(int i = 0; i < simulationState->populationSize; i++)
-            if (population[i].fitness >= best.fitness)
+            if (population[i].fitness >= best.fitness && population[i].isValid)
                 best = population[i];
 
         // Free parents
@@ -387,7 +387,7 @@ void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
         free(parents);
 
         // Define the best solution found so far after the current generation
-        if (best.fitness >= simulationState->BestSolution.fitness) {
+        if (best.fitness >= simulationState->BestSolution.fitness && best.isValid) {
             simulationState->BestSolution = best;
         }
 

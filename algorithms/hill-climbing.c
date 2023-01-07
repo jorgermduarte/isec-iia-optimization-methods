@@ -73,7 +73,9 @@ int hill_climbing(int sol[], int **mat, int vert, int num_iter)
     cost = calculate_fit(sol, mat, vert);
     for(i = 0; i < num_iter; i++)
     {
+        //generate_neighbor(sol, nova_sol, vert);
         generate_neighbor2(sol, nova_sol, vert);
+
 
         cost_neighbor = calculate_fit(nova_sol, mat, vert);
         if (cost_neighbor >= cost)

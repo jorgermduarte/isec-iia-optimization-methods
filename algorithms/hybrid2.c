@@ -24,9 +24,79 @@ typedef struct SimulationState {
     float mutationProbability;
     float recombinationProbability;
     Individual BestSolution;
+
+    int iterationsHillClimbing;
+
 }SimulationState;
 
 float executionsMedianFitness = 0;
+
+void generate_neighbor(int a[], int b[], int n)
+{
+    int i, p1, p2;
+    for(i = 0; i < n; i++)
+        b[i] = a[i];
+    do
+        p1 = random_l_h(0, n-1);
+    while(b[p1] != 0);
+    do
+        p2 = random_l_h(0, n-1);
+    while(b[p2] != 1);
+    b[p1] = 1;
+    b[p2] = 0;
+}
+
+void generate_neighbor2(int a[], int b[], int n)
+{
+    int i, p1, p2, p3, p4;
+
+    for(i = 0; i < n; i++)
+        b[i] = a[i];
+    do
+        p1 = random_l_h(0, n-1);
+    while(b[p1] != 0);
+    do
+        p2 = random_l_h(0, n-1);
+    while(b[p2] != 1);
+    b[p1] = 1;
+    b[p2] = 0;
+    do
+        p3 = random_l_h(0, n-1);
+    while(b[p3] != 0 || p3 == p2);
+    do
+        p4 = random_l_h(0, n-1);
+    while(b[p4] != 1 || p4 == p1);
+    b[p3] = 1;
+    b[p4] = 0;
+}
+
+int hill_climbing(int sol[], int **mat, int vert, int num_iter)
+{
+    int *nova_sol, cost, cost_neighbor, i;
+
+    nova_sol = malloc(sizeof(int)*vert);
+
+    if (nova_sol == NULL)
+    {
+        printf("Error allocating memory for the new solution.\n");
+        exit(1);
+    }
+
+    cost = calculate_fit(sol, mat, vert);
+    for(i = 0; i < num_iter; i++)
+    {
+        generate_neighbor2(sol, nova_sol, vert);
+
+        cost_neighbor = calculate_fit(nova_sol, mat, vert);
+        if (cost_neighbor >= cost)
+        {
+            replace(sol, nova_sol, vert);
+            cost = cost_neighbor;
+        }
+    }
+    free(nova_sol);
+    return cost;
+}
 
 //Generates a float random number 0-1
 float rand_01() {
@@ -307,8 +377,25 @@ void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
 
         free(parents);
 
+
         // Define the best solution found so far after the current generation
-        if (best.fitness >= simulationState->BestSolution.fitness) {
+        if (best.fitness >= simulationState->BestSolution.fitness && best.isValid) {
+            simulationState->BestSolution = best;
+        }
+
+        // hill climbing algorithm (local search) - inside the evolutionary!
+        for (int i = 0; i < simulationState->populationSize; i++) {
+            if(population[i].isValid){
+                //printf("Hill Climbing for individual %d\n", i);
+                int current_cost = hill_climbing(population[i].solution, adjacency_matrix, simulationState->genes, simulationState->iterationsHillClimbing);
+                if (current_cost > best.fitness) {
+                    best = population[i];
+                }
+            }
+        }
+
+        // Define the best solution found so far after the current generation
+        if (best.fitness >= simulationState->BestSolution.fitness && best.isValid) {
             simulationState->BestSolution = best;
         }
 
@@ -327,15 +414,16 @@ int main(int argc, char *argv[]) {
     int **adjacency_matrix;
     SimulationState simulationState = {
             .populationSize = 100, // you can change this value
-            .genes = 0,
-            .k = 0,
+            .iterationsHillClimbing = 10, // you can change this value
             .tournamentSize = 2, // you can change this value
             .generationsToSim = 1000, // you can change this value
-            .currentGeneration = 0,
-            .executions = 0,
             .mutationProbability = 0.5f, // you can change this value
             .recombinationProbability = 0.9f, // you can change this value
-            .BestSolution = {.fitness = 0, .isValid = 0, .solution = NULL}
+            .genes = 0,
+            .k = 0,
+            .currentGeneration = 0,
+            .executions = 0,
+            .BestSolution = {.fitness = 0, .isValid = 0, .solution = NULL},
     };
 
     int edges;
@@ -364,6 +452,8 @@ int main(int argc, char *argv[]) {
 
     printf(" > NumOfGenes: %d\n", simulationState.genes);
     printf(" > SubgroupNumber: %d\n", simulationState.k);
+
+    printf(" > Hill Climbing iterations per individual:  %d\n", simulationState.iterationsHillClimbing);
 
     for (int i = 0; i < simulationState.executions; i++) {
         printf("=============================== \n");
