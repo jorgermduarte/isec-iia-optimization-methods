@@ -344,15 +344,6 @@ void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
     simulationState->currentGeneration = 0;
     simulationState->BestSolution.fitness = 0;
 
-    // hill climbing algorithm (local search) - this is the only part that is different from the original algorithm
-    for (int i = 0; i < simulationState->populationSize; i++) {
-        //printf("Hill Climbing for individual %d\n", i);
-        int current_cost = hill_climbing(population[i].solution, adjacency_matrix, simulationState->genes, simulationState->iterationsHillClimbing);
-        if (current_cost > best.fitness) {
-            best = population[i];
-        }
-    }
-
     do {
         // Malloc for parents
         Individual *parents = (Individual *) malloc(simulationState->populationSize * sizeof(Individual));
@@ -377,7 +368,7 @@ void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
 
         // Update best solution
         for(int i = 0; i < simulationState->populationSize; i++)
-            if (population[i].fitness >= best.fitness)
+            if (population[i].fitness >= best.fitness && population[i].isValid)
                 best = population[i];
 
         // Free parents
@@ -385,6 +376,23 @@ void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
             free(parents[i].solution);
 
         free(parents);
+
+
+        // Define the best solution found so far after the current generation
+        if (best.fitness >= simulationState->BestSolution.fitness && best.isValid) {
+            simulationState->BestSolution = best;
+        }
+
+        // hill climbing algorithm (local search) - inside the evolutionary!
+        for (int i = 0; i < simulationState->populationSize; i++) {
+            if(population[i].isValid){
+                //printf("Hill Climbing for individual %d\n", i);
+                int current_cost = hill_climbing(population[i].solution, adjacency_matrix, simulationState->genes, simulationState->iterationsHillClimbing);
+                if (current_cost > best.fitness) {
+                    best = population[i];
+                }
+            }
+        }
 
         // Define the best solution found so far after the current generation
         if (best.fitness >= simulationState->BestSolution.fitness && best.isValid) {
@@ -406,7 +414,7 @@ int main(int argc, char *argv[]) {
     int **adjacency_matrix;
     SimulationState simulationState = {
             .populationSize = 100, // you can change this value
-            .iterationsHillClimbing = 100, // you can change this value
+            .iterationsHillClimbing = 10, // you can change this value
             .tournamentSize = 2, // you can change this value
             .generationsToSim = 1000, // you can change this value
             .mutationProbability = 0.5f, // you can change this value
