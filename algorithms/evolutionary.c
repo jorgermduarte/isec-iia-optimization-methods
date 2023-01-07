@@ -298,7 +298,7 @@ void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
 
         // Update best solution
         for(int i = 0; i < simulationState->populationSize; i++)
-            if (population[i].fitness >= best.fitness && population[i].isValid)
+            if (population[i].fitness >= best.fitness)
                 best = population[i];
 
         // Free parents
