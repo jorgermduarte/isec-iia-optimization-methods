@@ -17,17 +17,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/algorithms/hybrid2.c" afterDir="false" />
+    <list default="true" id="c627fb97-3355-49d5-b4fd-ee2459ad27b2" name="Changes" comment="feat: added hybrid2 in the project">
       <change afterPath="$PROJECT_DIR$/hybrid_algorithm2" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/hybrid_algorithm_2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/evolutionary.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/evolutionary.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/hill-climbing.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/hill-climbing.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/algorithms/hybrid.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/hybrid.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithms/hybrid2.c" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/hybrid2.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evolutionary" beforeDir="false" afterPath="$PROJECT_DIR$/evolutionary" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hybrid_algorithm" beforeDir="false" afterPath="$PROJECT_DIR$/hybrid_algorithm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +130,7 @@
       <workItem from="1673030794083" duration="7950000" />
       <workItem from="1673045615421" duration="4016000" />
       <workItem from="1673108983660" duration="2299000" />
-      <workItem from="1673116406387" duration="321000" />
+      <workItem from="1673116406387" duration="487000" />
     </task>
     <task id="LOCAL-00001" summary="feat: implemented the hill_climb algorithm">
       <created>1672096267983</created>
@@ -184,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673036467482</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: added hybrid2 in the project">
+      <created>1673116771871</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1673116771871</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,7 +203,8 @@
     <MESSAGE value="feat: added mbf in hill_climbing." />
     <MESSAGE value="feat: fixed evolutionary algorithm and added average best cost/ fitness of executions" />
     <MESSAGE value="feat: added hybrid algorithm base" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added hybrid algorithm base" />
+    <MESSAGE value="feat: added hybrid2 in the project" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added hybrid2 in the project" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
