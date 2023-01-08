@@ -24,7 +24,6 @@ typedef struct SimulationState {
     float mutationProbability;
     float recombinationProbability;
     Individual BestSolution;
-
     int iterationsHillClimbing;
 
 }SimulationState;
@@ -348,7 +347,7 @@ void code_execution(SimulationState *simulationState, int **adjacency_matrix) {
     for (int i = 0; i < simulationState->populationSize; i++) {
         //printf("Hill Climbing for individual %d\n", i);
         int current_cost = hill_climbing(population[i].solution, adjacency_matrix, simulationState->genes, simulationState->iterationsHillClimbing);
-        if (current_cost > best.fitness) {
+        if (current_cost >= best.fitness) {
             best = population[i];
         }
     }
@@ -408,7 +407,7 @@ int main(int argc, char *argv[]) {
             .populationSize = 100, // you can change this value
             .iterationsHillClimbing = 100, // you can change this value
             .tournamentSize = 2, // you can change this value
-            .generationsToSim = 1000, // you can change this value
+            .generationsToSim = 2500, // you can change this value
             .mutationProbability = 0.5f, // you can change this value
             .recombinationProbability = 0.9f, // you can change this value
             .genes = 0,
@@ -461,8 +460,6 @@ int main(int argc, char *argv[]) {
         simulationState.BestSolution.isValid = 0;
         for (int j = 0; j < simulationState.genes; j++)
             simulationState.BestSolution.solution[j] = 0;
-
-
 
     }
     printf(" =============================== \n");
